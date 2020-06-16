@@ -1,13 +1,5 @@
 # Digital-image-processing
-一、实验目的
-
-1、了解在空域图像增强中常用的典型算法：线性对比度展宽、直方图均衡化。使学生通过对图像采用线性对比度展宽、直方图均衡化的方法进行处理，获得图像画质的改善。
-
-2、掌握线性对比度展宽方法的工作原理和算法实现。
-
-3，掌握直方图均衡化方法的工作原理和算法实现。
-
-二、实验内容
+实验一：
 
 1，实现线性密度展宽算法。
 function [G]=ContrastWidening(ImPath,fa,fb,ga,gb)
@@ -17,3 +9,8 @@ function [G] = imhisteq(F)
 
 3、实现彩色图像的直方图均衡化算法（算法流程可以参考灰度图像的直方图均衡化算法）。
 function [G] = imhisteq_C(F)
+
+实验二：
+
+1、实现图像水平镜像
+function [OutImage] = mirror_horizontal(InputImage)

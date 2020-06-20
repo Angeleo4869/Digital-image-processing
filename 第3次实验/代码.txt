@@ -1,0 +1,44 @@
+
+1、
+im_noise_salt = imnoise(im,'salt & pepper'); % 加入椒盐噪声
+
+im_noise_gaussian = imnoise(im,'gaussian'); % 加入高斯噪声
+
+
+figure,imshow(im_noise_gaussian);title('加入高斯噪声后的图像');
+
+figure;
+subplot(131),imshow(im);title('原图');
+
+subplot(132),imshow(im_noise_salt);title('加入椒盐噪声后的图像');
+
+subplot(133),imshow(im_noise_gaussian);title('加入高斯噪声后的图像');
+
+2、
+n=1; m=2*n+1;
+A = fspecial('average',m); % 生成系统自带3×3滤波器
+im_filtered1 = filter2(A,im_noise_salt);
+
+im_filtered2 = filter2(A,im_noise_gaussian);
+
+figure;
+
+subplot(321),imshow(im_noise_salt);title('加入椒盐噪声后的图像');
+
+subplot(322),imshow(im_noise_gaussian);title('加入高斯噪声后的图像');
+
+subplot(323),imshow(uint8(im_filtered1));title('椒盐噪声图像进行均值滤波后的图像');
+
+subplot(324),imshow(uint8(im_filtered2));title('高斯噪声图像进行均值滤波后的图像');
+
+
+
+3、
+n1 = 2; m1 = 2*n1+1;
+n2 = 2; m2 = 2*n2+1;
+im_filtered11 = medfilt2(im_noise_salt,[m1,m2]);
+im_filtered22 = medfilt2(im_noise_gaussian,[m1,m2]);
+subplot(321),imshow(im_noise_salt);title('加入椒盐噪声后的图像');
+subplot(322),imshow(im_noise_gaussian);title('加入高斯噪声后的图像');
+subplot(323),imshow(im_filtered11);title('椒盐噪声图像进行中值滤波后的图像');
+subplot(324),imshow(im_filtered22);title('高斯噪声图像进行中值滤波后的图像');

@@ -1,0 +1,18 @@
+% 交叉微分算法（Roberts算法）
+% g( i, j)= |f(i+1,j+1)-f(i,j)|+ |f(i+1,j)-f(i,j+1)|
+
+%原始图像
+im = imread('im\Grayblur6.png');imshow(im);title('原始图像');
+
+[h,l,c] = size(im);%得到im的行列数与颜色通道
+f = double(im);
+g = zeros(h,l);%初始化输出矩阵g
+for i=1:h-1
+    for j=1:l-1
+        % 交叉微分，根据以下公式，由F(i,j)、F(i+1,j)、F(i,j+1)、F(i+1,j+1)计算G(i,j)
+        g(i,j) = abs(f(i+1,j+1)-f(i,j)) + abs(f(i+1,j)-f(i,j+1));
+    end
+end
+im2 = uint8(g);
+figure,imshow(im2);title('交叉微分/Roberts锐化所得的图像');
+figure,imshow(uint8(g+f));title('交叉微分/Roberts锐化并叠加原图所得的图像');

@@ -112,3 +112,94 @@ function [im_filered] = KNN_denoise (I,K,N)
 function [im_filered] = SNNFilter(im_noise,n)
 ```
 
+## **实验****4** **图像锐化**
+
+### **一、实验目的**
+
+1、掌握一阶锐化算法的工作原理和算法实现。
+
+2、掌握二阶锐化算法的工作原理和算法实现。
+
+### **二、实验内容**
+
+#### **1、实现拉普拉斯锐化。**
+
+```matlab
+% 输入原始图像
+im = imread('im\Grayblur6.png');imshow(im);
+im = double(im);
+
+H1 = [0 -1 0;-1 4 -1;0 -1 0];
+im_filter1 = filter2(H1,im);
+
+% 拉普拉斯锐化得到H1图像
+im2_1 = im_filter1 + im;
+figure,imshow(uint8(im2_1));
+
+maxV = max(max(im_filter1));
+minV = min(min(im_filter1));
+
+%拉普拉斯锐化图像
+delta = 0;
+if(minV<0)
+    delta = abs(minV);
+end
+im1 = im_filter1 + delta;
+figure,imshow(uint8(im1));
+
+```
+
+[^由于代码较容易，故未采用函数式，而是直接在matlab命令上运行]: 
+
+#### 2、**实现Sobel微分算子**
+
+```matlab
+% Sobel锐化   
+% g(i,j)=[dx(i,j)^2+dy(i,j)^2]^(1/2);
+% dx = [-1 -2 -1;0 0 0;1 2 1]; dy = [-1 0 1;-2 0 2;-1 0 1];
+
+% 原始图像
+im = imread('im\Grayblur6.png');
+imshow(im);
+im = double(im);
+
+H1 = [-1 -2 -1;0 0 0;1 2 1];
+dx = filter2(H1,im);
+H2 = [-1 0 1;-2 0 2;-1 0 1];
+dy = filter2(H2,im);
+
+im2 = sqrt(dx.^2 + dy.^2); % .^2:矩阵中的每个元素都求平方
+
+%Sobel锐化所得的图像
+figure,imshow(uint8(im2));
+im3 = im + sqrt(dx.^2 + dy.^2)*0.1;
+
+%Sobel锐化并叠加原图所得的图像
+figure,imshow(uint8(im3));
+
+```
+
+#### 3、**实现交叉微分算法（Roberts算法）**
+
+```matlab
+% 交叉微分算法（Roberts算法）
+% g( i, j)= |f(i+1,j+1)-f(i,j)|+ |f(i+1,j)-f(i,j+1)|
+
+%原始图像
+im = imread('im\Grayblur6.png');imshow(im);title('原始图像');
+
+[h,l,c] = size(im);%得到im的行列数与颜色通道
+f = double(im);
+g = zeros(h,l);%初始化输出矩阵g
+for i=1:h-1
+    for j=1:l-1
+        % 交叉微分，根据以下公式，由F(i,j)、F(i+1,j)、F(i,j+1)、F(i+1,j+1)计算G(i,j)
+        g(i,j) = abs(f(i+1,j+1)-f(i,j)) + abs(f(i+1,j)-f(i,j+1));
+    end
+end
+im2 = uint8(g);
+figure,imshow(im2);title('交叉微分/Roberts锐化所得的图像');
+figure,imshow(uint8(g+f));title('交叉微分/Roberts锐化并叠加原图所得的图像');
+
+```
+

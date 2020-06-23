@@ -1,0 +1,24 @@
+% （拉普拉斯）Laplacian锐化算法
+
+
+% 输入原始图像
+im = imread('im\Grayblur6.png');imshow(im);
+im = double(im);
+
+H1 = [0 -1 0;-1 4 -1;0 -1 0];
+im_filter1 = filter2(H1,im);
+
+% 拉普拉斯锐化得到H1图像
+im2_1 = im_filter1 + im;
+figure,imshow(uint8(im2_1));
+
+maxV = max(max(im_filter1));
+minV = min(min(im_filter1));
+
+%拉普拉斯锐化图像
+delta = 0;
+if(minV<0)
+    delta = abs(minV);
+end
+im1 = im_filter1 + delta;
+figure,imshow(uint8(im1));

@@ -112,7 +112,7 @@ function [im_filered] = KNN_denoise (I,K,N)
 function [im_filered] = SNNFilter(im_noise,n)
 ```
 
-## **实验****4** **图像锐化**
+## **实验**4 **图像锐化**
 
 ### **一、实验目的**
 
@@ -201,5 +201,27 @@ im2 = uint8(g);
 figure,imshow(im2);title('交叉微分/Roberts锐化所得的图像');
 figure,imshow(uint8(g+f));title('交叉微分/Roberts锐化并叠加原图所得的图像');
 
+```
+
+## 实验五 图像分割
+
+### 一、**实验目的**
+
+1、掌握p参数分割的工作原理和算法实现
+
+2、掌握均匀性度量法分割的工作原理和算法实现
+
+### **二、实验内容**
+
+#### **1、实现P-参数法的图像分割**
+
+```matlab
+function [Im2] = pParam0(Im,perct)
+```
+
+#### 2、**实现均匀性度量法的图像分割**
+
+```matlab
+function [Im2,BestC1Thrd] = jyxdl(Im)
 ```
 
